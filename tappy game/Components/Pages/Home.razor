@@ -1,50 +1,72 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @using tappygame
+
+@code{
+    //upgrades
+}
 <button class="btn btn-outline-success" @onclick="UpCount">+1Tap</button> <h1>Total:@Count.ToString("0.00")</h1>
 <PageTitle>Home</PageTitle>
-<div class="card">
-    <div class="card-body">
-        <h4 classs="card-title">Tappy Hand</h4>
-        <p class="card-text">A week hand that will boost your taps per tap.</p>
-        @if(Count >= CostOfUp1)
-        {
-            <button class="btn btn-success" @onclick="Upgrade1">+1TPT</button>
-        }
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="@progress"></div>
+
+<body datya-spy="scroll" data-target="#myScrollspy" data-offset="1">
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-sm-3 col-4" id="myScrollspy">
+                <ul class="nav nav-pills flex-columm">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#section1">Tappy Hand</a>
+                        <a class="nav-link active" href="#section2">Tapping Group</a>
+                        <a class="nav-link active" href="#section3">Tapping Farm</a>
+                        <a class="nav-link active" href="#section4">Tapping mines</a>
+                        <a class="nav-link active" href="#section5">Tapping factory</a>
+                        <a class="nav-link active" href="#section6">Tapping bank</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="col-sm-9 col-8">
+                <div id="section1">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 classs="card-title">Tappy Hand</h4>
+                            <p class="card-text">A week hand that will boost your taps per tap.</p>
+                            @if (Count >= CostOfTHand)
+                            {
+                                <button class="btn btn-success" @onclick="Upgrade1">+1TPT</button>
+                            }
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="@progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="section2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Tapping Group</h4>
+                            <p class="card-text">A group of people that jast will not STOP TAPPING!!</p>
+                            @if (Count >= CostOfTGroup)
+                            {
+                                <button class="btn btn-success" @onclick="Upgrade2">+10TPT</button>
+                            }
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="@Progress2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">Tapping Group</h4>
-        <p class="card-text">A group of people that jast will not STOP TAPPING!!</p>
-        @if(Count >= CostOfUp2)
-        {
-            <button class="btn btn-success" @onclick="Upgrade2">+10TPT</button>
-        }
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="@Progress2"></div>
-        </div>
-    </div>
-</div>
+</body>
+
+
 @code {
+    //how the upgrades work
     public decimal Count = 0;
 
     private decimal CountUpBy = 1;
 
-    private decimal CostOfUp1 = 10;
-
-    private decimal CostOfUp2 = 50;
-
-    private string Progress2 = "with:";
-
-    public decimal B = 0;
-
-    public decimal A = 0;
-
-    private string progress = "width:";
+ 
     protected override void OnInitialized()
     {
         progress += Count.ToString() + "%";
@@ -52,28 +74,54 @@
     }
     private void Upgrade1()
     {
-        Count = Count - CostOfUp1;
+        Count = Count - CostOfTHand;
         CountUpBy = CountUpBy + 1;
-        CostOfUp1 = CostOfUp1 / 2 + CostOfUp1;
+        CostOfTHand = CostOfTHand / 2 + CostOfTHand;
     }
     private void Upgrade2()
     {
-        Count = Count - CostOfUp2;
+        Count = Count - CostOfTGroup;
         CountUpBy = CountUpBy + 10;
-        CostOfUp2 = CostOfUp2 / 2 + CostOfUp2;
+        CostOfTGroup = CostOfTGroup / 2 + CostOfTGroup;
     }
     private void UpCount()
     {
         Count = Count + CountUpBy;
-        A = (Count / CostOfUp1) * 100;
-        B = (Count / CostOfUp2) * 100;
+        A = (Count / CostOfTHand) * 100;
+        B = (Count / CostOfTGroup) * 100;
         progress = "width:"+A.ToString() + "% ";
         Progress2 = "width:" + B.ToString() + "% ";
     }
 }
-@if(Count >= 1000)
-{
-    <div class="alert alert-success">
-        <strong>Success!</strong> You made your first 1000 taps!
-    </div>
+
+@code{
+    //First upgrade cost
+
+    private decimal CostOfTHand = 10;
+
+    private decimal CostOfTGroup = 50;
+
+    private decimal CostOfTFarm = 500;
+
+    private decimal CostOfTMine = 5000;
+
+    private decimal CostOfTFactory = 10000;
+
+    private decimal CostOfTBank = 100000;
+
+    //progress and progress veribles
+    private string progressTHand = "width:";
+
+    private string progressTGroup = "whidth:";
+
+    private string progressTFarm = "width:";
+
+    Private string PrgressTFactory = "width:"
+    private string Progress2 = "with:";
+
+    public decimal B = 0;
+
+    public decimal A = 0;
+
+    private string progress = "width:";
 }
