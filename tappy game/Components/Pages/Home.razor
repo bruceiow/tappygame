@@ -1,0 +1,79 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using tappygame
+<button class="btn btn-outline-success" @onclick="UpCount">+1Tap</button> <h1>Total:@Count.ToString("0.00")</h1>
+<PageTitle>Home</PageTitle>
+<div class="card">
+    <div class="card-body">
+        <h4 classs="card-title">Tappy Hand</h4>
+        <p class="card-text">A week hand that will boost your taps per tap.</p>
+        @if(Count >= CostOfUp1)
+        {
+            <button class="btn btn-success" @onclick="Upgrade1">+1TPT</button>
+        }
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="@progress"></div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Tapping Group</h4>
+        <p class="card-text">A group of people that jast will not STOP TAPPING!!</p>
+        @if(Count >= CostOfUp2)
+        {
+            <button class="btn btn-success" @onclick="Upgrade2">+10TPT</button>
+        }
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="@Progress2"></div>
+        </div>
+    </div>
+</div>
+@code {
+    public decimal Count = 0;
+
+    private decimal CountUpBy = 1;
+
+    private decimal CostOfUp1 = 10;
+
+    private decimal CostOfUp2 = 50;
+
+    private string Progress2 = "with:";
+
+    public decimal B = 0;
+
+    public decimal A = 0;
+
+    private string progress = "width:";
+    protected override void OnInitialized()
+    {
+        progress += Count.ToString() + "%";
+        Progress2 += Count.ToString() + "%";
+    }
+    private void Upgrade1()
+    {
+        Count = Count - CostOfUp1;
+        CountUpBy = CountUpBy + 1;
+        CostOfUp1 = CostOfUp1 / 2 + CostOfUp1;
+    }
+    private void Upgrade2()
+    {
+        Count = Count - CostOfUp2;
+        CountUpBy = CountUpBy + 10;
+        CostOfUp2 = CostOfUp2 / 2 + CostOfUp2;
+    }
+    private void UpCount()
+    {
+        Count = Count + CountUpBy;
+        A = (Count / CostOfUp1) * 100;
+        B = (Count / CostOfUp2) * 100;
+        progress = "width:"+A.ToString() + "% ";
+        Progress2 = "width:" + B.ToString() + "% ";
+    }
+}
+@if(Count >= 1000)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> You made your first 1000 taps!
+    </div>
+}

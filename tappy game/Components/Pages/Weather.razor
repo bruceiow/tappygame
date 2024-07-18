@@ -1,0 +1,26 @@
+﻿@page "/weather"
+<PageTitle>Home</PageTitle>
+<div class="card">
+    <div class="card-body">
+        <h4 classs="card-title">Tappy Hand</h4>
+        <p class="card-text">A week hand that will boost your taps per tap.</p>
+        <button class="btn btn-success" @onclick="Upgrade1">+1TPT</button>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-success" style="width:40%"@Count</div>
+        </div>
+    </div>
+</div>
+@code {
+    private decimal Count = 0;
+
+    private decimal CountUpBy = 1;
+
+    private decimal CostOfUp1 = 10;
+
+    private void Upgrade1()
+    {
+        Count = Count - CostOfUp1;
+        CountUpBy = CountUpBy + 1;
+        CostOfUp1 = CostOfUp1 / 2 + CostOfUp1;
+    }
+}
